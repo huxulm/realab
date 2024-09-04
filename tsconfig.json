@@ -22,15 +22,12 @@
     "outDir": "./dist",
     "skipLibCheck": true,
     "sourceMap": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "suppressExcessPropertyErrors": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "ignoreDeprecations": "5.0",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": ["node"]
+    }
   },
   "include": ["src/**/*", "demo/**/*"],
   "exclude": ["node_modules", "dist"]
