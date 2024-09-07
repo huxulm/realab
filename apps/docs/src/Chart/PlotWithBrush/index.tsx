@@ -1,3 +1,4 @@
+/* tslint:disable */
 import React, { RefObject, useEffect, useRef } from "react";
 import { useParentSize } from "@visx/responsive";
 
@@ -30,8 +31,8 @@ interface RenderFunction {
 }
 
 const render: RenderFunction = ({ ref, xScale, yScale }) => {
-  const width = ref.current.clientWidth / 2;
-  const height = ref.current.clientHeight / 2;
+  const width = ref.current.clientWidth;
+  const height = ref.current.clientHeight;
   const x = scaleUtc(
     extent<any, Date>(data.downloads, (v) => new Date(v.day)),
     [0, width]
@@ -42,7 +43,7 @@ const render: RenderFunction = ({ ref, xScale, yScale }) => {
   ).nice();
 
   const svg = select(ref.current)
-    .attr("transform", "translate(50, 50)")
+    .attr("transform", "translate(0, 0)")
     .style("overflow", "visible");
 
   svg.selectAll("*").remove();
@@ -71,7 +72,7 @@ const render: RenderFunction = ({ ref, xScale, yScale }) => {
     );
 };
 
-const PlotWithBrush = (props) => {
+const PlotWithBrush = (props: any) => {
   const { parentRef, width, height } = useParentSize({ debounceTime: 150 });
   const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {

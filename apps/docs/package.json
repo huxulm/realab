@@ -1,11 +1,10 @@
 {
-  "name": "vite-ts-lib-starter",
+  "name": "docs",
   "private": false,
   "version": "0.0.1",
-  "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/huxulm/vite-ts-lib-starter.git"
+    "url": "git+https://github.com/huxulm/realab.git"
   },
   "files": [
     "dist"
@@ -21,6 +20,8 @@
     "react-dom": ">=16"
   },
   "devDependencies": {
+    "@vizdev/typescript-config": "workspace:*",
+    "@vizdev/tailwind-config": "workspace:*",
     "@chromatic-com/storybook": "^1.6.1",
     "@storybook/addon-essentials": "^8.2.4",
     "@storybook/addon-interactions": "^8.2.4",
