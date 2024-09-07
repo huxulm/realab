@@ -69,6 +69,9 @@ importers:
       '@storybook/addon-onboarding':
         specifier: ^8.2.4
         version: 8.2.9(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      '@storybook/addon-themes':
+        specifier: ^8.2.9
+        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       '@storybook/blocks':
         specifier: ^8.2.4
         version: 8.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -83,9 +86,6 @@ importers:
         version: 8.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.21.2)(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(typescript@5.4.5)(vite@5.4.3(@types/node@20.11.24))
       '@storybook/test':
         specifier: ^8.2.4
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
-      '@storybook/theming':
-        specifier: ^8.2.7
         version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       '@types/d3-array':
         specifier: ^3.2.1
@@ -1506,6 +1506,11 @@ packages:
 
   '@storybook/addon-outline@8.2.9':
     resolution: {integrity: sha512-p22kI4W7MT0YJOCmg/FfhfH+NpZEDA5tgwstjazSg4ertyhaxziMwWZWiK2JCg0gOAfRJjoYjHz+6/u56iXwgQ==}
+    peerDependencies:
+      storybook: ^8.2.9
+
+  '@storybook/addon-themes@8.2.9':
+    resolution: {integrity: sha512-f9buB5v18ul7IP0JALkPn9kpPvkkxe4RiEF5S77i1B6v7/1Owa62DLp2NLgav/tvg6MHsGap4UnnyuOxWHUTbg==}
     peerDependencies:
       storybook: ^8.2.9
 
@@ -6302,6 +6307,11 @@ snapshots:
   '@storybook/addon-outline@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))':
     dependencies:
       '@storybook/global': 5.0.0
+      storybook: 8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      ts-dedent: 2.2.0
+
+  '@storybook/addon-themes@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))':
+    dependencies:
       storybook: 8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2))
       ts-dedent: 2.2.0
 

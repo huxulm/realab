@@ -1,26 +1,25 @@
+import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
-import { themes } from '@storybook/theming';
-import "../src/global.css";
+import '../src/global.css';
+
+export const decorators = [
+  withThemeByClassName({
+    themes: {
+      light: 'light',
+      'dark': 'dark',
+    },
+    defaultTheme: 'light',
+  }),
+];
+
 const preview: Preview = {
+  globalTypes: {
+  },  
   parameters: {
-    darkMode: {
-      // Override the default dark theme
-      dark: { ...themes.dark, appBg: 'black' },
-      // Override the default light theme
-      light: { ...themes.normal, appBg: 'white' }
-    },    
-    backgrounds: {
-      default: 'black',
-      values: [
-        {
-          name: 'black',
-          value: '#222',
-        },
-        {
-          name: 'white',
-          value: '#eee',
-        },
-      ],
+    options: {
+      storySort: {
+        order: ['start', 'QTT 110 设计系统', "QTT 110 设计系统/接收机", "QTT 110 设计系统/主动面", 'utils', 'icons'],
+      },
     },
     controls: {
       matchers: {

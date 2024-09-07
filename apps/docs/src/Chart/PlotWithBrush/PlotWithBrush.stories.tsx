@@ -6,7 +6,7 @@ const meta = {
   component: PlotWithBrush,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: "centered",
+    layout: "fullscreen",
   },
 } satisfies Meta<any>;
 
@@ -17,11 +17,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => {
     return (
-      <PlotWithBrush
-        className={
-          "flex justify-center items-center bg-blue-200 w-[800px] h-[800px]"
-        }
-      />
+      <div className="w-full h-full min-h-screen bg-white dark:bg-blue-800 flex justify-center items-center">
+        <PlotWithBrush
+          className={
+            "flex justify-center items-center w-[800px] h-[800px]"
+          }
+        />
+      </div>
     );
   },
 };
