@@ -65,6 +65,7 @@
     "@types/d3-time": "^3.0.3",
     "@types/d3-time-format": "^4.0.3",
     "@visx/responsive": "^3.10.2",
+    "clsx": "^2.1.1",
     "d3-array": "^3.2.4",
     "d3-axis": "^3.0.0",
     "d3-brush": "^3.0.0",

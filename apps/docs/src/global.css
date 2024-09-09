@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .tw-demo-label {
+        @apply before:content-['>'] hover:bg-gray-200 cursor-pointer rounded-[.5rem] before:px-3 p-3 select-none text-red-600 before:font-extrabold font-mono text-3xl;
+    }
+}

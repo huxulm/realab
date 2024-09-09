@@ -1,7 +1,7 @@
 {
   "extends": "@vizdev/typescript-config/vite.json",
-  "include": ["src"],
+  "include": ["."],
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
   }
 }
