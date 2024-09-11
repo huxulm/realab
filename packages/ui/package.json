@@ -19,16 +19,32 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "18",
+    "react-dom": "18"
   },
   "devDependencies": {
+    "@types/react": "~18",
+    "@types/react-dom": "~18",
     "@vizdev/eslint-config": "workspace:*",
     "@vizdev/tailwind-config": "workspace:*",
     "@vizdev/typescript-config": "workspace:*",
-    "@types/react": "^18.2.61",
-    "autoprefixer": "^10.4.18",
-    "postcss": "^8.4.35",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.45",
+    "postcss-import": "^16.1.0",
+    "postcss-load-config": "^6.0.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "tsup": "^8.0.2"
+  },
+  "dependencies": {
+    "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.438.0",
+    "react-resizable-panels": "^2.1.2",
+    "recharts": "^2.12.7",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7"
   }
 }

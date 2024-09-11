@@ -1,5 +1,12 @@
 {
   "extends": "@vizdev/typescript-config/react-library.json",
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["DOM", "ES2017"],
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
 }
