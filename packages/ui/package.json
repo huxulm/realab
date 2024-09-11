@@ -9,13 +9,27 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    "./card": "./src/card.tsx"
+    "./card": {
+      "types": "./src/card/index.tsx",
+      "import": "./dist/card/index.mjs",
+      "require": "./dist/card/index.js"
+    },
+    "./chart": {
+      "types": "./src/chart/index.tsx",
+      "import": "./dist/chart/index.mjs",
+      "require": "./dist/chart/index.js"
+    },
+    "./chart/cartesian/line": {
+      "types": "./src/chart/cartesian/line/index.tsx",
+      "import": "./dist/chart/cartesian/line/index.mjs",
+      "require": "./dist/chart/cartesian/line/index.js"
+    }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build": "tsup",
     "lint": "eslint src/",
-    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev": "tsup --watch",
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
@@ -23,8 +37,10 @@
     "react-dom": "18"
   },
   "devDependencies": {
+    "@types/d3-shape": "^3.1.6",
     "@types/react": "~18",
     "@types/react-dom": "~18",
+    "@types/recharts": "^1.8.29",
     "@vizdev/eslint-config": "workspace:*",
     "@vizdev/tailwind-config": "workspace:*",
     "@vizdev/typescript-config": "workspace:*",
@@ -32,6 +48,7 @@
     "postcss": "^8.4.45",
     "postcss-import": "^16.1.0",
     "postcss-load-config": "^6.0.1",
+    "recharts": "^2.12.7",
     "tailwindcss": "^3.4.1",
     "tsup": "^8.0.2"
   },
@@ -43,7 +60,6 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.438.0",
     "react-resizable-panels": "^2.1.2",
-    "recharts": "^2.12.7",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   }

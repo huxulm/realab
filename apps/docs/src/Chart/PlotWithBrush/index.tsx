@@ -1,24 +1,55 @@
 /* tslint:disable */
-import React, { RefObject, useEffect, useRef } from "react";
-import { useParentSize } from "@visx/responsive";
+import {
+  FC,
+  RefObject,
+  PropsWithRef,
+  useEffect,
+  useRef,
+  ForwardedRef,
+  forwardRef,
+  MutableRefObject,
+  ComponentProps,
+  ReactElement,
+  useCallback,
+} from "react";
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+} from "@vizdev/ui/chart";
 
-import data from "./data.json";
-import { scaleLinear, ScaleLinear, ScaleTime, scaleUtc } from "d3-scale";
-import { extent } from "d3-array";
+import { MotionLine } from "@vizdev/ui/chart/cartesian/line";
+
+import {
+  Bar,
+  ComposedChart,
+  BarProps,
+  CartesianGrid,
+  Line,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { type ActiveShape } from "recharts/types/util/types";
+
+import {
+  scaleBand,
+  scaleDiverging,
+  scaleIdentity,
+  scaleLinear,
+  ScaleLinear,
+  scaleOrdinal,
+  ScaleTime,
+  scaleUtc,
+} from "d3-scale";
+import { extent, map, max } from "d3-array";
 import { select } from "d3-selection";
 import { axisBottom, axisLeft, axisRight } from "d3-axis";
 import { utcMonth } from "d3-time";
 import { curveCatmullRom, line } from "d3-shape";
-
-interface Data {
-  package: string;
-  start: string;
-  end: string;
-  downloads: {
-    downloads: number;
-    day: string;
-  }[];
-}
+import { SVGProps } from "react";
+import { motion } from "framer-motion";
+import data from "./data.json";
 
 interface RenderFunction {
   ({
@@ -30,61 +61,134 @@ interface RenderFunction {
   }): void;
 }
 
-const render: RenderFunction = ({ ref, xScale, yScale }) => {
-  const width = ref.current.clientWidth;
-  const height = ref.current.clientHeight;
-  const x = scaleUtc(
-    extent<any, Date>(data.downloads, (v) => new Date(v.day)),
-    [0, width]
-  )//.nice();
-  const y = scaleLinear(
-    extent(data.downloads, (v) => v.downloads),
-    [height, 0]
-  ).nice();
+// add react component props type with ref
+interface PlotWithBrushProps {
+  className?: string;
+}
 
-  const svg = select(ref.current)
-    .attr("transform", "translate(0, 0)")
-    .style("overflow", "visible");
+const chartData = [
+  { month: "一月", desktop: 186, mobile: 80 },
+  { month: "二月", desktop: 305, mobile: 200 },
+  { month: "三月", desktop: 237, mobile: 120 },
+  { month: "四月", desktop: 73, mobile: 190 },
+  { month: "五月", desktop: 209, mobile: 130 },
+  { month: "六月", desktop: 214, mobile: 140 },
+] satisfies Data[];
 
-  svg.selectAll("*").remove();
+interface Data {
+  month: string;
+  desktop: number;
+  mobile: number;
+}
 
-  const xAxis = axisBottom(x).ticks(utcMonth.every(1));
-  svg.call((g) =>
-    g.append("g").attr("transform", `translate(0, ${height})`).call(xAxis)
-  );
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    theme: {
+      light: "hsl(var(--chart-1))",
+      dark: "hsl(var(--chart-1))",
+    },
+  },
+  mobile: {
+    label: "Mobile",
+    theme: {
+      light: "hsl(var(--chart-2))",
+      dark: "hsl(var(--chart-2))",
+    },
+  },
+} satisfies ChartConfig;
 
-  const yAxis = axisLeft(y);
-  //   yAxis.ticks(10);
-  svg.append("g").call(yAxis);
+const CustomizedBarShape: (
+  props: BarProps
+) => ReactElement<SVGProps<SVGPathElement>> = ({
+  x,
+  y,
+  height,
+  width,
+  fill,
+}) => {
+  const getPath = (x: number, y: number, width: number, height: number) =>
+    `M${x},${y + height}
+     C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3} ${x + width / 2}, ${y}
+     C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${x + width}, ${y + height}
+     Z`;
 
-  svg
-    .append("g")
-    .attr("class", "path")
-    .append("path")
-    .attr("stroke", "black")
-    .attr("fill", "none")
-    .attr(
-      "d",
-      line<any>()
-        .x((v) => x(new Date(v.day)))
-        .y((v) => y(v.downloads))
-        .curve(curveCatmullRom)(data.downloads)
-    );
-};
-
-const PlotWithBrush = (props: any) => {
-  const { parentRef, width, height } = useParentSize({ debounceTime: 150 });
-  const ref = useRef<SVGSVGElement>(null);
-  useEffect(() => {
-    // if (parentRef.current) {
-    render({ ref });
-    // }
-  }, [parentRef.current]);
   return (
-    <div ref={parentRef} {...props}>
-      <svg width={width} height={height} ref={ref} />
-    </div>
+    <path
+      d={getPath(x as number, y as number, width as number, height as number)}
+      fill={fill}
+      stroke="none"
+    />
   );
 };
 
-export default PlotWithBrush;
+function PlotWithBrushInner(
+  { className }: PlotWithBrushProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
+  const txtRef = useRef<HTMLParagraphElement>(null);
+  const handleShowClass = () => {
+    const cur = (ref as MutableRefObject<HTMLDivElement>).current;
+    txtRef.current!.innerHTML = cur.className;
+  };
+
+  const interactive = () => (
+    <>
+      <button
+        className="bg-violet-500 hover:bg-violet-300 p-2 border rounded items-center"
+        onClick={handleShowClass}
+      >
+        click show classnames
+      </button>
+      <p ref={txtRef} className="text-violet-600 word-spacing-3 hidden"></p>
+    </>
+  );
+  const xScale = scaleBand<string>().domain(
+    map(chartData, (d) => d.month) as Iterable<string>
+  );
+  const yScale = scaleLinear().domain(
+    extent(chartData, (d) => max([d.mobile, d.desktop])) as Iterable<number>
+  );
+  const getPath = useCallback(
+    (key: "desktop" | "mobile"): string => {
+      const lineGenerator = line<Data>()
+        .x((d) => xScale(d.month) as number)
+        .y((d) => yScale(d[key]) as number)
+        .curve(curveCatmullRom);
+      return lineGenerator(chartData) as string;
+    },
+    [chartData]
+  );
+  return (
+    <ChartContainer ref={ref} config={chartConfig} className={className}>
+      <ComposedChart accessibilityLayer data={chartData}>
+        <CartesianGrid stroke="hsl(var(--foreground))" />
+        <XAxis
+          dataKey="month"
+          tickLine={true}
+          tickMargin={10}
+          scale={xScale}
+          stroke="hsl(var(--foreground))"
+        />
+        <YAxis tickCount={10} stroke="hsl(var(--foreground))" />
+        <Bar
+          dataKey="desktop"
+          fill="var(--color-desktop)"
+          radius={4}
+          shape={CustomizedBarShape}
+        />
+        <Bar
+          dataKey="mobile"
+          fill="var(--color-mobile)"
+          radius={4}
+          shape={CustomizedBarShape}
+        />
+        <MotionLine dataKey={"mobile"} stroke="hsl(var(--chart-2))" />
+        {/* <Line dataKey={"mobile"} stroke="hsl(var(--chart-2))" /> */}
+        <ChartLegend content={<ChartLegendContent />} />
+      </ComposedChart>
+    </ChartContainer>
+  );
+}
+
+export default forwardRef(PlotWithBrushInner);

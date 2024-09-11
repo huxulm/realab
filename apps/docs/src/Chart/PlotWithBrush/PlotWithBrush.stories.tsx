@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import PlotWithBrush from ".";
+import { useRef } from "react";
 
 const meta = {
   title: "Charts/Plot",
-  component: PlotWithBrush,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "fullscreen",
   },
-} satisfies Meta<any>;
+} satisfies Meta<typeof PlotWithBrush>;
 
 export default meta;
 
@@ -16,12 +16,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => {
+    const ref = useRef<HTMLDivElement>(null);
     return (
-      <div className="w-full h-full min-h-screen bg-white dark:bg-blue-800 flex justify-center items-center">
+      <div className="size-full h-screen flex justify-center items-center">
         <PlotWithBrush
-          className={
-            "flex justify-center items-center w-[800px] h-[800px]"
-          }
+          ref={ref}
+          className={"size-[600px] rounded-lg shadow-lg p-5 bg-white dark:bg-black"}
         />
       </div>
     );
