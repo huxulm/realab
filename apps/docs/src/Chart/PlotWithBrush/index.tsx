@@ -1,14 +1,10 @@
 /* tslint:disable */
 import {
-  FC,
   RefObject,
-  PropsWithRef,
-  useEffect,
   useRef,
   ForwardedRef,
   forwardRef,
   MutableRefObject,
-  ComponentProps,
   ReactElement,
   useCallback,
 } from "react";
@@ -19,7 +15,7 @@ import {
   ChartLegendContent,
 } from "@vizdev/ui/chart";
 
-import { MotionLine } from "@vizdev/ui/chart/cartesian/line";
+import { MotionLine } from "@vizdev/ui/line";
 
 import {
   Bar,
@@ -29,8 +25,8 @@ import {
   Line,
   XAxis,
   YAxis,
+  BarChart,
 } from "recharts";
-import { type ActiveShape } from "recharts/types/util/types";
 
 import {
   scaleBand,
@@ -149,19 +145,10 @@ function PlotWithBrushInner(
   const yScale = scaleLinear().domain(
     extent(chartData, (d) => max([d.mobile, d.desktop])) as Iterable<number>
   );
-  const getPath = useCallback(
-    (key: "desktop" | "mobile"): string => {
-      const lineGenerator = line<Data>()
-        .x((d) => xScale(d.month) as number)
-        .y((d) => yScale(d[key]) as number)
-        .curve(curveCatmullRom);
-      return lineGenerator(chartData) as string;
-    },
-    [chartData]
-  );
+  console.log(MotionLine);
   return (
     <ChartContainer ref={ref} config={chartConfig} className={className}>
-      <ComposedChart accessibilityLayer data={chartData}>
+      <BarChart accessibilityLayer data={chartData}>
         <CartesianGrid stroke="hsl(var(--foreground))" />
         <XAxis
           dataKey="month"
@@ -177,16 +164,10 @@ function PlotWithBrushInner(
           radius={4}
           shape={CustomizedBarShape}
         />
-        <Bar
-          dataKey="mobile"
-          fill="var(--color-mobile)"
-          radius={4}
-          shape={CustomizedBarShape}
-        />
-        <MotionLine dataKey={"mobile"} stroke="hsl(var(--chart-2))" />
         {/* <Line dataKey={"mobile"} stroke="hsl(var(--chart-2))" /> */}
         <ChartLegend content={<ChartLegendContent />} />
-      </ComposedChart>
+        <MotionLine cx={100} cy={0} r={500} fill="red" />
+      </BarChart>
     </ChartContainer>
   );
 }

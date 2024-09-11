@@ -1,6 +1,8 @@
-import { ComponentProps, FC } from "react";
-import { Line, LineProps } from "recharts";
+import * as React from "react";
 
-export const MotionLine: FC<any> = (props) => {
-  return <circle cx={10} cy={10} r={300} fill="red" />;
+const MotionLine: React.FC<any> = (props) => {
+  return <circle {...props} />;
 };
+
+MotionLine.displayName = "motion line";
+export { MotionLine };

@@ -4,32 +4,35 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "lint": "eslint src/",
-    "dev": "tsup --watch",
-    "type-check": "tsc --noEmit"
-  },
+  "files": ["dist"],
   "exports": {
     "./styles.css": "./dist/styles.css",
     "./card": {
-      "types": "./src/card/index.tsx",
+      "types": "./dis/card/index.d.mts",
       "import": "./dist/card/index.mjs",
-      "require": "./dist/card/index.js"
+      "require": "./dist/card/index.mjs"
     },
     "./chart": {
-      "types": "./src/chart/index.tsx",
+      "types": "./dist/chart/index.d.mts",
       "import": "./dist/chart/index.mjs",
-      "require": "./dist/chart/index.js"
+      "require": "./dist/chart/index.mjs"
     },
     "./chart/cartesian/line": {
-      "types": "./src/chart/cartesian/line/index.tsx",
+      "types": "./dist/chart/cartesian/line/index.d.mts",
       "import": "./dist/chart/cartesian/line/index.mjs",
-      "require": "./dist/chart/cartesian/line/index.js"
+      "require": "./dist/chart/cartesian/line/index.mjs"
+    },
+    "./line": {
+      "types": "./dist/line/index.d.mts",
+      "import": "./dist/line/index.mjs",
+      "require": "./dist/line/index.mjs"
     }
+  },
+  "scripts": {
+    "build": "tsup --platform browser",
+    "lint": "eslint src/",
+    "dev": "tsup --platform browser --watch",
+    "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "peerDependencies": {
