@@ -7,8 +7,14 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit"
+  },
   "exports": {
-    "./styles.css": "./dist/index.css",
+    "./styles.css": "./dist/styles.css",
     "./card": {
       "types": "./src/card/index.tsx",
       "import": "./dist/card/index.mjs",
@@ -26,12 +32,6 @@
     }
   },
   "license": "MIT",
-  "scripts": {
-    "build": "tsup",
-    "lint": "eslint src/",
-    "dev": "tsup --watch",
-    "type-check": "tsc --noEmit"
-  },
   "peerDependencies": {
     "react": "18",
     "react-dom": "18"

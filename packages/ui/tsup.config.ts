@@ -2,6 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
   entry: {
+    "styles": "src/styles.css",
     "card/index": "src/card/index.tsx",
     "chart/index": "src/chart/index.tsx",
     "chart/cartesian/line/index": "src/chart/cartesian/line/index.tsx",
